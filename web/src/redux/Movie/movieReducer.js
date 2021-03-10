@@ -1,5 +1,8 @@
 import { 
     FETCH_MOVIE_REQUEST,
+    FETCH_MOVIES_REQUEST,
+    FETCH_MOVIES_SUCCESS,
+    FETCH_MOVIES_ERROR,
 } from "./movieTypes"
 
 const initialState = {
@@ -12,7 +15,10 @@ const initialState = {
         url: 'www.someurl.com',
         overview: 'Pulp fiction is a 1994 Americam crime film...',
         runtime: '154 min',
-        show: false
+        show: false,
+        loading: false,
+        movies: [],
+        error: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +27,26 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload
+            }
+        
+        case FETCH_MOVIES_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_MOVIES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                movies: action.payload,
+                error: ''
+            }
+        case FETCH_MOVIES_ERROR:
+            return {
+                ...state,
+                loading: false,
+                movies: [],
+                error: action.payload
             }
         
         default: return state

@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavBar, CardGallery } from './../components'
+import { NavBar } from './../components'
+import CardGallery from './../components/CardGallery'
 import { MovieCounterStyles } from './../styles'
 import PropTypes from 'prop-types';
 

@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CardsContainer } from './../styles'
 import MovieCard  from './MovieCard'
 import { MovieGallery } from './../__mocks__'
+import { connect } from 'react-redux'
+import { fetchMovies } from './../redux'
 
-export const CardGallery = () => {
+const CardGallery = ({ movies,  fetchMoviesRequest}) => {
+
+
+    useEffect(() => {
+        fetchMoviesRequest()
+    }, [fetchMoviesRequest])
+
     return (
             <CardsContainer>
+                {/* {
+                    movies.map( movie => (
+                        <li>{movie.title}</li>
+                    ))
+                } */}
                 {
                     MovieGallery.map(movie => {
                         return (
@@ -28,3 +41,17 @@ export const CardGallery = () => {
             </CardsContainer>
     )
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchMoviesRequest: () => dispatch(fetchMovies())
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        movies: state.movie.movies
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardGallery)
