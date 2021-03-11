@@ -1,21 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { fetchMovieRequest, addMovie, fetchMovies } from './../redux'
 
-const MoviesCounter = ({ className, counter }) => {
+const MoviesCounter = ({ className, movies }) => {
     return (
         <div className={className}>
-            {counter} movies found
+            {movies.length} movies found
         </div>
     )
 }
 
 MoviesCounter.propTypes = {
     className: PropTypes.string.isRequired,
-    counter: PropTypes.number.isRequired,
 }
 
-MoviesCounter.defaultProps = {
-    counter: 0,
-};
+const mapStateToProps = state => {
+    return {
+        movies: state.movie.movies
+    }
+}
 
-export  { MoviesCounter }
+const mapDispatchToProps = dispatch => {
+    return {
+       fetchMovie: (show) => dispatch(fetchMovieRequest(show)),
+       createMovie: (movieData) => dispatch(addMovie(movieData)),
+       fetchMoviesRequest: (filters) => dispatch(fetchMovies(filters))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesCounter)

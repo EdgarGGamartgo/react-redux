@@ -14,7 +14,7 @@ import {
         ModalDeleteMsg
 } from './../styles'
 
-export const ModalContent = ({ toggleModal, modalType, modalData, handleInput }) => {
+export const ModalContent = ({ toggleModal, modalType, modalData, handleInput, handleSubmit }) => {
 
         return (
                 <ModalContainer>
@@ -57,7 +57,7 @@ export const ModalContent = ({ toggleModal, modalType, modalData, handleInput })
                                                         <Paragraph>GENRE</Paragraph>
                                                 </ThemeProvider>
                                                 <ThemeProvider theme={OtherInput}>
-                                                        <Select defaultValue={ modalData.genre === '' ? 'DEFAULT' : modalData.genre }>
+                                                        <Select defaultValue={ modalData.genre === '' ? 'DEFAULT' : modalData.genre } name='genre' onChange={(e) => handleInput(e)}>
                                                                 <option value="DEFAULT">Genre here</option>
                                                                 <option value="Action & Adventure">Action & Adventure</option>
                                                                 <option value="Drama, Biography, Music">Drama, Biography, Music</option>
@@ -85,7 +85,7 @@ export const ModalContent = ({ toggleModal, modalType, modalData, handleInput })
                                                 ? <ResetButton>RESET</ResetButton>
                                                 : null
                                         }
-                                        <SubmitButton>{modalType === 'ADD' ? 'SUBMIT' : modalType === 'EDIT' ? 'SAVE' : 'CONFIRM'}</SubmitButton>
+                                        <SubmitButton onClick={() => handleSubmit(modalType)}>{modalType === 'ADD' ? 'SUBMIT' : modalType === 'EDIT' ? 'SAVE' : 'CONFIRM'}</SubmitButton>
                                 </ButtonsContainer>
                         </ModalBodyContent>
                 </ModalContainer>

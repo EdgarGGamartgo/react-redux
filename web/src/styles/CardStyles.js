@@ -40,14 +40,14 @@ export const Card = styled.div`
     position: relative;
     margin: 10px;
     box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
-    max-width: 30%;
+    width: 30%;
     &:hover {
             cursor: pointer;
         }
 `
 export const CardImg = styled.img`
-    max-width: 100%;
-    max-height: 50vh;
+    width: 100%;
+    height: 50vh;
 `
 
 export const CardText = styled.div`

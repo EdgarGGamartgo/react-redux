@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MoviesCounter } from './../components'
+import MoviesCounter from './../components/MoviesCounter'
 
 export const MovieCounterStyles = styled(MoviesCounter)`
     color: #FFFFFF;

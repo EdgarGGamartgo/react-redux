@@ -3,6 +3,15 @@ import {
     FETCH_MOVIES_REQUEST,
     FETCH_MOVIES_SUCCESS,
     FETCH_MOVIES_ERROR,
+    CREATE_MOVIE_REQUEST,
+    CREATE_MOVIE_SUCCESS,
+    CREATE_MOVIE_ERROR,
+    EDIT_MOVIE_REQUEST,
+    EDIT_MOVIE_SUCCESS,
+    EDIT_MOVIE_ERROR,
+    DELETE_MOVIE_REQUEST,
+    DELETE_MOVIE_SUCCESS,
+    DELETE_MOVIE_ERROR,
 } from "./movieTypes"
 
 const initialState = {
@@ -18,7 +27,8 @@ const initialState = {
         show: false,
         loading: false,
         movies: [],
-        error: ''
+        error: '',
+        movie: null,
 }
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +44,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
+
         case FETCH_MOVIES_SUCCESS:
             return {
                 ...state,
@@ -41,11 +52,76 @@ const reducer = (state = initialState, action) => {
                 movies: action.payload,
                 error: ''
             }
+
         case FETCH_MOVIES_ERROR:
             return {
                 ...state,
                 loading: false,
                 movies: [],
+                error: action.payload
+            }
+
+        case CREATE_MOVIE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case CREATE_MOVIE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                movie: action.payload,
+                error: ''
+            }
+
+        case CREATE_MOVIE_ERROR:
+            return {
+                ...state,
+                loading: false,
+                movie: null,
+                error: action.payload
+            }
+
+        case EDIT_MOVIE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case EDIT_MOVIE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                movie: action.payload,
+                error: ''
+            }
+
+        case EDIT_MOVIE_ERROR:
+            return {
+                ...state,
+                loading: false,
+                movie: null,
+                error: action.payload
+            }
+
+        case DELETE_MOVIE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DELETE_MOVIE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: ''
+            }
+
+        case DELETE_MOVIE_ERROR:
+            return {
+                ...state,
+                loading: false,
                 error: action.payload
             }
         

@@ -12,9 +12,9 @@ import PropTypes from 'prop-types';
 import { DotsVerticalRounded } from '@styled-icons/boxicons-regular'
 import { Modal, ModalContent } from './../components';
 import { connect } from 'react-redux'
-import { fetchMovieRequest } from './../redux'
+import { fetchMovieRequest, editMovie, deleteMovie } from './../redux'
 
-const MovieCard = ({ img, title, genre, releaseDate, rating, imgAlt, url, movieId, overview, runtime, fetchMovie }) => {
+const MovieCard = ({ deleteMovieRequest, editMovieRequest, img, title, genre, releaseDate, rating, imgAlt, url, movieId, overview, runtime, fetchMovie }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [showIcon, setShowIcon] = useState(false)
@@ -75,6 +75,29 @@ const MovieCard = ({ img, title, genre, releaseDate, rating, imgAlt, url, movieI
         [img, fetchMovie, title, genre, releaseDate, rating, overview, runtime]
     )
 
+    const handleSubmit = (type) => {
+        console.log('handleSubmit from MovieCardSSS.js: ', type)
+        console.log('handleSubmit from MovieCard.js: ', modalData)
+        if (type === 'EDIT') {
+            editMovieRequest({
+                "title": modalData.title,
+                "tagline": "none",
+                "vote_average": 0,
+                "vote_count": 0,
+                "release_date": modalData.releaseDate,
+                "poster_path": modalData.url,
+                "overview": modalData.overview,
+                "budget": 0,
+                "revenue": 0,
+                "runtime": +modalData.runtime,
+                "genres": modalData.genre.split(', '),
+                "id": +modalData.movieId
+              })
+        } else if (type === 'DELETE') {
+            deleteMovieRequest(+modalData.movieId)
+        }
+    }
+
     return (
         <Card onClick={showDetails} onMouseOver={() => setShowIcon(true)} onMouseLeave={() => setShowIcon(false)}>
             <CardImg src={img} alt={imgAlt} />
@@ -101,6 +124,7 @@ const MovieCard = ({ img, title, genre, releaseDate, rating, imgAlt, url, movieI
                 showModal ? (
                     <Modal>
                         <ModalContent
+                            handleSubmit={handleSubmit}
                             modalData={modalData}
                             handleInput={handleInput}
                             modalType={modalType}
@@ -133,7 +157,9 @@ MovieCard.defaultProps = {
 
 const mapDispatchToProps = dispatch => {
     return {
-       fetchMovie: (show) => dispatch(fetchMovieRequest(show))
+       fetchMovie: (show) => dispatch(fetchMovieRequest(show)),
+       editMovieRequest: (movieData) => dispatch(editMovie(movieData)),
+       deleteMovieRequest: (id) => dispatch(deleteMovie(id)),
     }
 }
 

@@ -33,7 +33,7 @@ export const DetailsTitle = styled.p`
 export const DetailsSubTitle = styled.p`
     color: white;
     margin-bottom: 1px;
-    font-size: 10px;
+    font-size: 7px;
 `
 
 export const DetailsSpan = styled.span`

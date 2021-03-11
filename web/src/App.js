@@ -11,9 +11,9 @@ function App() {
   return (
       <ErrorBoundary>
         <Provider store={store}>
-        <HeaderContainer/>
-        <MainContainer/>
-        <FooterContainer/>
+          <HeaderContainer/>
+          <MainContainer/>
+          <FooterContainer/>
         </Provider>
       </ErrorBoundary>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { 
   TopNav,
   A,
@@ -11,8 +11,24 @@ import {
   DropButton
 } from './../styles'
 import { NavOptions, ResultsSort } from './../__mocks__'
+import { connect } from 'react-redux'
+import { fetchMovies } from './../redux'
 
-export const NavBar = () => {
+const NavBar = ({ fetchMoviesRequest }) => {
+
+  const [sorting, setSorting] = useState('')
+
+  const sortHandler = (name) => {
+    setSorting(name)
+    if (name === 'RATING') {
+      fetchMoviesRequest('?sortBy=vote_average&sortOrder=desc')
+    } else if (name === 'RELEASE DATE') {
+      fetchMoviesRequest('?sortBy=release_date&sortOrder=desc')
+    } else {
+      fetchMoviesRequest(`?search=${name.toLowerCase()}&searchBy=genres`)
+    }
+  }
+
     return (
       <TopNav>
         {
@@ -20,15 +36,15 @@ export const NavBar = () => {
             return (
               option.active 
               ? <Active key={option.id}>{option.name}</Active>
-              : <A key={option.id}>{option.name}</A>
+              : <A onClick={() => sortHandler(option.name)}  key={option.id}>{option.name}</A>
             )
           }) 
         }
         <DropDown>
-          <DropButton>RELEASE DATE: <Arrow/></DropButton>
+          <DropButton>{sorting}<Arrow/></DropButton>
           <DropDownContent>
             {
-              ResultsSort.map(option => <DropDownParagrapgh key={option.id}>{option.name}</DropDownParagrapgh>) 
+              ResultsSort.map(option => <DropDownParagrapgh onClick={() => sortHandler(option.name)} key={option.id}>{option.name}</DropDownParagrapgh>) 
             }
           </DropDownContent>
         </DropDown>
@@ -36,3 +52,18 @@ export const NavBar = () => {
       </TopNav>  
     )
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+      fetchMoviesRequest: (filters) => dispatch(fetchMovies(filters))
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+      movies: state.movie.movies,
+      load: state.movie.loading
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
